@@ -1,0 +1,53 @@
+librcnb: RCNB Encoding/Decoding Routines
+======================================
+
+Overview:
+--------
+librcnb is a library of ANSI C routines for fast encoding/decoding data into
+and from a rcnb-encoded format. C++ wrappers are included, as well as the
+source code for standalone encoding and decoding executables.
+
+rcnb consists of ASCII text, and is therefore a useful encoding for storing
+binary data in a text file, such as xml, or sending binary data over text-only
+email.
+
+References:
+----------
+* RCNB.js:
+	https://github.com/rcnbapp/RCNB.js
+* RCNB.php, another implementation of the rcnb encoding:
+	https://github.com/rcnbapp/RCNB.php
+
+Commandline Use:
+---------------
+There is a new executable available, it is simply called rcnb.
+It can encode and decode files, as instructed by the user.
+
+To encode a file:
+$ ./rcnb -e filea fileb
+fileb will now be the base64-encoded version of filea.
+
+To decode a file:
+$ ./rcnb -d fileb filec
+filec will now be identical to filea.
+
+Programming:
+-----------
+Some C++ wrappers are provided as well, so you don't have to get your hands
+dirty. Encoding from standard input to standard output is as simple as
+
+	#include <rcnb/encode.h>
+	#include <iostream>
+	int main()
+	{
+		rcnb::encoder E;
+		E.encode(std::cin, std::cout);
+		return 0;
+	}
+
+Both standalone executables and a static library is provided in the package,
+
+Example code:
+------------
+The 'examples' directory contains some simple example C code, that demonstrates
+how to use the C interface of the library.
