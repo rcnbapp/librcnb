@@ -8,8 +8,6 @@ For details, see https://github.com/rikakomoe/librcnb
 #include <rcnb/cencode.h>
 #include <rcnb/rcnb.h>
 
-#include <stdio.h>
-
 void rcnb_init_encodestate(rcnb_encodestate* state_in)
 {
     state_in->cached = false;

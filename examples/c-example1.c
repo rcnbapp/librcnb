@@ -4,7 +4,7 @@ c-example1.c - librcnb example code
 This is part of the librcnb project, and has been placed in the public domain.
 For details, see https://github.com/rikakomoe/librcnb
 
-This is a short example of how to use libb64's C interface to encode
+This is a short example of how to use librcnb's C interface to encode
 and decode a string directly.
 */
 

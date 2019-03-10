@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.1)
 ###
 ### Project settings
 ###
-project(librcnb C)
+project(librcnb)
 
 set(PROJECT_VERSION_MAJOR "1")
 set(PROJECT_VERSION_MINOR "0")
@@ -24,17 +24,26 @@ set_target_properties(rcnb PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         PUBLIC_HEADER include/rcnb/cencode.h
-        PUBLIC_HEADER include/rcnb/cdecode.h)
+        PUBLIC_HEADER include/rcnb/cdecode.h
+        PUBLIC_HEADER include/rcnb/encode.h
+        PUBLIC_HEADER include/rcnb/decode.h)
 set_target_properties(rcnb-static PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         PUBLIC_HEADER include/rcnb/cencode.h
-        PUBLIC_HEADER include/rcnb/cdecode.h)
+        PUBLIC_HEADER include/rcnb/cdecode.h
+        PUBLIC_HEADER include/rcnb/encode.h
+        PUBLIC_HEADER include/rcnb/decode.h)
 
 add_executable(example1 examples/c-example1.c)
 target_link_libraries(example1 rcnb-static)
 add_executable(example2 examples/c-example2.c)
 target_link_libraries(example2 rcnb-static)
+add_executable(rcnb-cli rcnb/rcnb.cc)
+target_link_libraries(rcnb-cli rcnb-static)
+set_target_properties(rcnb-cli
+        PROPERTIES OUTPUT_NAME rcnb
+        CXX_STANDARD 11)
 
 ###
 ### General compilation settings

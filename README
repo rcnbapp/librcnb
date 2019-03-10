@@ -7,10 +7,6 @@ librcnb is a library of ANSI C routines for fast encoding/decoding data into
 and from a rcnb-encoded format. C++ wrappers are included, as well as the
 source code for standalone encoding and decoding executables.
 
-rcnb consists of ASCII text, and is therefore a useful encoding for storing
-binary data in a text file, such as xml, or sending binary data over text-only
-email.
-
 References:
 ----------
 * RCNB.js:
@@ -25,7 +21,7 @@ It can encode and decode files, as instructed by the user.
 
 To encode a file:
 $ ./rcnb -e filea fileb
-fileb will now be the base64-encoded version of filea.
+fileb will now be the rcnb-encoded version of filea.
 
 To decode a file:
 $ ./rcnb -d fileb filec
