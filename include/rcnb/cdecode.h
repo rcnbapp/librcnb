@@ -13,7 +13,7 @@ For details, see https://github.com/rikakomoe/librcnb
 
 typedef struct
 {
-    bool cached;
+    size_t i;
     wchar_t trailing_code[4];
 } rcnb_decodestate;
 

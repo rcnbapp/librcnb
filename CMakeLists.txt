@@ -33,6 +33,8 @@ set_target_properties(rcnb-static PROPERTIES
 
 add_executable(example1 examples/c-example1.c)
 target_link_libraries(example1 rcnb-static)
+add_executable(example2 examples/c-example2.c)
+target_link_libraries(example2 rcnb-static)
 
 ###
 ### General compilation settings

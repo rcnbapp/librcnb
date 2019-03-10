@@ -19,7 +19,7 @@ int find(const wchar_t* const arr, const unsigned length, const wchar_t target)
 
 void rcnb_init_decodestate(rcnb_decodestate* state_in)
 {
-    state_in->cached = false;
+    state_in->i = 0;
 }
 
 bool rcnb_decode_short(const wchar_t* value_in, char** value_out)
@@ -69,41 +69,43 @@ bool rcnb_decode_byte(const wchar_t* value_in, char** value_out)
 size_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
         char* const plaintext_out, rcnb_decodestate* state_in)
 {
-    if (length_in < 2)
-        return 0;
     char* plaintext_char = plaintext_out;
     bool res;
-    if (state_in->cached) {
-        state_in->trailing_code[2] = code_in[0];
-        state_in->trailing_code[3] = code_in[1];
-        res = rcnb_decode_short(state_in->trailing_code, &plaintext_char);
-        if (!res)
-            return 0;
-        code_in += 2;
-        length_in -= 2;
-        state_in->cached = false;
+    while (state_in->i < 4 && length_in > 0) {
+        state_in->trailing_code[state_in->i++] = code_in[0];
+        length_in--;
+        code_in++;
     }
+    if (length_in == 0)
+        return 0;
+    res = rcnb_decode_short(state_in->trailing_code, &plaintext_char);
+    if (!res)
+        return 0;
+    state_in->i = 0;
     for (int i = 0; i < (length_in >> 2); ++i) {
         res = rcnb_decode_short(code_in + i * 4, &plaintext_char);
         if (!res)
             return 0;
     }
-    if (length_in & 2) {
-        state_in->trailing_code[0] = code_in[length_in - 2];
-        state_in->trailing_code[1] = code_in[length_in - 1];
-        state_in->cached = true;
+    state_in->i = length_in % 4;
+    for (size_t j = 0; j < state_in->i; ++j) {
+        state_in->trailing_code[j] = code_in[length_in - state_in->i + j];
     }
+    *plaintext_char = 0;
     return plaintext_char - plaintext_out;
 }
 
 size_t rcnb_decode_blockend(char* const plaintext_out, rcnb_decodestate* state_in)
 {
+    if (state_in->i != 0 && state_in->i != 2)
+        return 0;
     char* plaintext_char = plaintext_out;
-    if (state_in->cached) {
+    if (state_in->i == 2) {
         if(!rcnb_decode_byte(state_in->trailing_code, &plaintext_char))
             return 0;
     }
-    state_in->cached = false;
+    *plaintext_char = 0;
+    state_in->i = 0;
     return plaintext_char - plaintext_out;
 }
 
