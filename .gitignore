@@ -1,3 +1,9 @@
 .idea
 cmake-build-debug
+.vscode
+.vs
 build
+*.o
+*.a
+*.so
+*.dll

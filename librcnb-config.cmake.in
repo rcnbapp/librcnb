@@ -1,0 +1,14 @@
+# - Config file for the librcnb package
+# It defines the following variables
+#  RCNB_INCLUDE_DIR - include directory
+#  RCNB_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(RCNB_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(RCNB_INCLUDE_DIR "@CONFIG_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+include("${RCNB_CMAKE_DIR}/@PROJECT_NAME@-targets.cmake")
+
+# These are IMPORTED targets created by librcnb-targets.cmake
+set(RCNB_LIBRARIES "@EXPORT_TARGETS@")
