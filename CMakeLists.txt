@@ -3,5 +3,4 @@ project(librcnb C)
 
 include_directories(include)
 
-add_executable(main src/cencode.c)
-add_executable(main2 src/cdecode.c)
+add_library(rcnb SHARED src/cencode.c src/cdecode.c src/rcnb.c)
