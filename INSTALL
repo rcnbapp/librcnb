@@ -1,0 +1,15 @@
+librcnb: RCNB Encoding/Decoding Routines
+======================================
+
+Compiling:
+---------
+```
+cmake .
+make
+```
+
+Installing:
+----------
+```
+sudo make install
+```
