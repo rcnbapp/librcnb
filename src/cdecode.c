@@ -66,7 +66,7 @@ bool rcnb_decode_byte(const wchar_t* value_in, char** value_out)
     return true;
 }
 
-size_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
+ptrdiff_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
         char* const plaintext_out, rcnb_decodestate* state_in)
 {
     char* plaintext_char = plaintext_out;
@@ -80,12 +80,12 @@ size_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
         return 0;
     res = rcnb_decode_short(state_in->trailing_code, &plaintext_char);
     if (!res)
-        return 0;
+        return -1;
     state_in->i = 0;
     for (int i = 0; i < (length_in >> 2); ++i) {
         res = rcnb_decode_short(code_in + i * 4, &plaintext_char);
         if (!res)
-            return 0;
+            return -1;
     }
     state_in->i = length_in % 4;
     for (size_t j = 0; j < state_in->i; ++j) {
@@ -95,14 +95,14 @@ size_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
     return plaintext_char - plaintext_out;
 }
 
-size_t rcnb_decode_blockend(char* const plaintext_out, rcnb_decodestate* state_in)
+ptrdiff_t rcnb_decode_blockend(char* const plaintext_out, rcnb_decodestate* state_in)
 {
     if (state_in->i != 0 && state_in->i != 2)
-        return 0;
+        return -1;
     char* plaintext_char = plaintext_out;
     if (state_in->i == 2) {
         if(!rcnb_decode_byte(state_in->trailing_code, &plaintext_char))
-            return 0;
+            return -1;
     }
     *plaintext_char = 0;
     state_in->i = 0;
@@ -116,13 +116,13 @@ ptrdiff_t rcnb_decode(const wchar_t* code_in, size_t length_in, char* plaintext_
     rcnb_decodestate es;
     rcnb_init_decodestate(&es);
     size_t output_size = 0;
-    size_t block_size = 0;
+    ptrdiff_t block_size = 0;
     block_size = rcnb_decode_block(code_in, length_in, plaintext_out, &es);
-    if (block_size == 0)
+    if (block_size < 0)
         return -1;
     output_size += block_size;
     block_size = rcnb_decode_blockend(plaintext_out + output_size, &es);
-    if (block_size == 0)
+    if (block_size < 0)
         return -1;
     return output_size + block_size;
 }

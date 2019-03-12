@@ -33,11 +33,11 @@ struct decoder {
         rcnb_init_decodestate(&_state);
     }
 
-    size_t decode(const wchar_t* code_in, size_t length_in, char* plaintext_out) {
+    ptrdiff_t decode(const wchar_t* code_in, size_t length_in, char* plaintext_out) {
         return rcnb_decode_block(code_in, length_in, plaintext_out, &_state);
     }
 
-    size_t decode_end(char* const plaintext_out) {
+    ptrdiff_t decode_end(char* const plaintext_out) {
         return rcnb_decode_blockend(plaintext_out, &_state);
     }
 

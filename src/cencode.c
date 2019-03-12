@@ -79,7 +79,7 @@ size_t rcnb_encode_blockend(wchar_t* const code_out, rcnb_encodestate* state_in)
     return code_char - code_out;
 }
 
-ptrdiff_t rcnb_encode(const char* plaintext_in, size_t length_in, wchar_t* code_out)
+size_t rcnb_encode(const char* plaintext_in, size_t length_in, wchar_t* code_out)
 {
     rcnb_encodestate es;
     rcnb_init_encodestate(&es);

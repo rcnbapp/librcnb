@@ -20,6 +20,6 @@ typedef struct
 void rcnb_init_encodestate(rcnb_encodestate* state_in);
 size_t rcnb_encode_block(const char* plaintext_in, size_t length_in, wchar_t* code_out, rcnb_encodestate* state_in);
 size_t rcnb_encode_blockend(wchar_t* code_out, rcnb_encodestate* state_in);
-ptrdiff_t rcnb_encode(const char* plaintext_in, size_t length_in, wchar_t* code_out);
+size_t rcnb_encode(const char* plaintext_in, size_t length_in, wchar_t* code_out);
 
 #endif /* RCNB_CENCODE_H */

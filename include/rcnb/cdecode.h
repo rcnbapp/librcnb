@@ -18,8 +18,8 @@ typedef struct
 } rcnb_decodestate;
 
 void rcnb_init_decodestate(rcnb_decodestate* state_in);
-size_t rcnb_decode_block(const wchar_t* code_in, size_t length_in, char* plaintext_out, rcnb_decodestate* state_in);
-size_t rcnb_decode_blockend(char* plaintext_out, rcnb_decodestate* state_in);
+ptrdiff_t rcnb_decode_block(const wchar_t* code_in, size_t length_in, char* plaintext_out, rcnb_decodestate* state_in);
+ptrdiff_t rcnb_decode_blockend(char* plaintext_out, rcnb_decodestate* state_in);
 ptrdiff_t rcnb_decode(const wchar_t* code_in, size_t length_in, char* plaintext_out);
 
 #endif //RCNB_CDECODE_H
