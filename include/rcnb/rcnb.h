@@ -24,4 +24,4 @@ extern const unsigned short src;
 extern const unsigned short snb;
 extern const unsigned short scnb;
 
-#endif //LIBRCNB_RCNB_H
+#endif // RCNB_RCNB_H

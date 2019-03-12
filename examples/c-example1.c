@@ -8,11 +8,10 @@ This is a short example of how to use librcnb's C interface to encode
 and decode a string directly.
 */
 
-#include <rcnb/cencode.h>
 #include <rcnb/cdecode.h>
+#include <rcnb/cencode.h>
 
 #include <assert.h>
-
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>

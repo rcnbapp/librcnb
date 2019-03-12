@@ -23,23 +23,19 @@ add_library(rcnb-static STATIC src/cencode.c src/cdecode.c src/rcnb.c)
 set_target_properties(rcnb PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
-        PUBLIC_HEADER include/rcnb/cencode.h
-        PUBLIC_HEADER include/rcnb/cdecode.h
-        PUBLIC_HEADER include/rcnb/encode.h
-        PUBLIC_HEADER include/rcnb/decode.h)
+        PUBLIC_HEADER "include/rcnb/cencode.h;include/rcnb/cdecode.h;include/rcnb/encode.h;include/rcnb/decode.h")
 set_target_properties(rcnb-static PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
-        PUBLIC_HEADER include/rcnb/cencode.h
-        PUBLIC_HEADER include/rcnb/cdecode.h
-        PUBLIC_HEADER include/rcnb/encode.h
-        PUBLIC_HEADER include/rcnb/decode.h)
+        PUBLIC_HEADER "include/rcnb/cencode.h;include/rcnb/cdecode.h;include/rcnb/encode.h;include/rcnb/decode.h")
 
 add_executable(example1 examples/c-example1.c)
 target_link_libraries(example1 rcnb-static)
 add_executable(example2 examples/c-example2.c)
 target_link_libraries(example2 rcnb-static)
-add_executable(rcnb-cli rcnb/rcnb.cc)
+add_executable(example3 examples/cpp-example3.cc)
+target_link_libraries(example3 rcnb-static)
+add_executable(rcnb-cli examples/cpp-rcnb-cli.cc)
 target_link_libraries(rcnb-cli rcnb-static)
 set_target_properties(rcnb-cli
         PROPERTIES OUTPUT_NAME rcnb

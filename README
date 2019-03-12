@@ -37,7 +37,8 @@ dirty. Encoding from standard input to standard output is as simple as
 	int main()
 	{
 		rcnb::encoder E;
-		E.encode(std::cin, std::cout);
+		setlocale(LC_ALL, "");
+		E.encode(std::cin, std::wcout);
 		return 0;
 	}
 
@@ -45,5 +46,5 @@ Both standalone executables and a static library is provided in the package,
 
 Example code:
 ------------
-The 'examples' directory contains some simple example C code, that demonstrates
-how to use the C interface of the library.
+The 'examples' directory contains some simple example code, that demonstrates
+how to use the interface of the library.

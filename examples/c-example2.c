@@ -13,12 +13,8 @@ know the size of the input file before hand, and so we use to iterate over
 encoding and decoding the data.
 */
 
-#include <rcnb/cencode.h>
 #include <rcnb/cdecode.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <rcnb/cencode.h>
 
 #include <locale.h>
 #include <stdio.h>

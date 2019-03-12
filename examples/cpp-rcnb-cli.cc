@@ -5,8 +5,8 @@ This is part of the librcnb project, and has been placed in the public domain.
 For details, see https://github.com/rikakomoe/librcnb
 */
 
-#include <rcnb/encode.h>
 #include <rcnb/decode.h>
+#include <rcnb/encode.h>
 
 #include <codecvt>
 #include <cstdlib>
