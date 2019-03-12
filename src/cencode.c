@@ -37,7 +37,7 @@ void rcnb_encode_byte(unsigned char value_in, wchar_t** value_out)
     if (value_in > 0x7F) {
         value_in = (unsigned char)(value_in & 0x7F);
         *(*value_out)++ = cn[value_in / sb];
-        *(*value_out) = cb[value_in % sb];
+        *(*value_out)++ = cb[value_in % sb];
         return;
     }
     *(*value_out)++ = cr[value_in / sc];
