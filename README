@@ -16,7 +16,7 @@ References:
 
 Commandline Use:
 ---------------
-There is a new executable available, it is simply called rcnb.
+There is an executable available, it is simply called rcnb.
 It can encode and decode files, as instructed by the user.
 
 To encode a file:

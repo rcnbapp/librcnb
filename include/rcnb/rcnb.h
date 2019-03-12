@@ -20,8 +20,8 @@ extern const unsigned short sc;
 extern const unsigned short sn;
 extern const unsigned short sb;
 
-extern const unsigned short src;
-extern const unsigned short snb;
-extern const unsigned short scnb;
+#define src (sr * sc)
+#define snb (sn * sb)
+#define scnb (sc * snb)
 
 #endif // RCNB_RCNB_H

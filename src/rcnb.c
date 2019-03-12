@@ -16,7 +16,3 @@ const unsigned short sr = sizeof(cr) / sizeof(wchar_t);
 const unsigned short sc = sizeof(cc) / sizeof(wchar_t);
 const unsigned short sn = sizeof(cn) / sizeof(wchar_t);
 const unsigned short sb = sizeof(cb) / sizeof(wchar_t);
-
-const unsigned short src = sr * sc;
-const unsigned short snb = sn * sb;
-const unsigned short scnb = sc * snb;
