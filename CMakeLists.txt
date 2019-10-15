@@ -37,6 +37,8 @@ target_link_libraries(example2 rcnb-static)
 add_executable(example3 examples/cpp-example3.cc)
 target_link_libraries(example3 rcnb-static)
 add_executable(rcnb-cli examples/cpp-rcnb-cli.cc)
+set_target_properties(example3
+        PROPERTIES CXX_STANDARD 11)
 target_link_libraries(rcnb-cli rcnb-static)
 set_target_properties(rcnb-cli
         PROPERTIES OUTPUT_NAME rcnb
