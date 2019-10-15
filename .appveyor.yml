@@ -1,0 +1,32 @@
+image:
+  - Ubuntu1604
+  - Ubuntu1804
+  - Visual Studio 2015
+  - Visual Studio 2017
+  - Visual Studio 2019
+
+configuration:
+  - Release
+
+before_build:
+  - |-
+    mkdir build
+    cd build
+    cmake --version
+  - sh: cmake ..
+  - cmd: cmake .. -D CMAKE_BUILD_TYPE=%CONFIGURATION%
+
+build_script:
+  - sh: cmake --build . --config $CONFIGURATION
+  - cmd: cmake --build . --config %CONFIGURATION%
+
+test_script:
+  - echo "The Quick Brown RC Jumps Over the NB Dog." > in.txt
+  - cmd: |-
+      .\\%CONFIGURATION%\\rcnb -e in.txt out.rcnb
+      .\\%CONFIGURATION%\\rcnb -d out.rcnb out.txt
+      fc /b in.txt out.txt && exit /b 0 || exit /b 1
+  - sh: |-
+      ./rcnb -e in.txt out.rcnb
+      ./rcnb -d out.rcnb out.txt
+      cmp in.txt out.txt
