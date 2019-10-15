@@ -38,7 +38,7 @@ int main()
     ptrdiff_t res = rcnb_decode(encoded, wcslen(encoded), decoded);
     if (res < 0)
         wprintf(L"decode failed\n");
-    wprintf(L"decoded: %s\n", decoded);
+    printf("decoded: %s\n", decoded);
 
     /* compare the original and decoded data */
     assert(strcmp(input, decoded) == 0);
