@@ -12,7 +12,9 @@ set(PROJECT_VERSION_MAJOR "1")
 set(PROJECT_VERSION_MINOR "0")
 set(PROJECT_VERSION_PATCH "0")
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-set(CMAKE_C_FLAGS "-utf-8 ${CMAKE_C_FLAGS}")
+if(WIN32)
+    set(CMAKE_C_FLAGS "/utf-8 ${CMAKE_C_FLAGS}")
+endif()
 
 ###
 ### Sources, headers, directories and libs
@@ -29,7 +31,11 @@ set_target_properties(rcnb-static PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         PUBLIC_HEADER "include/rcnb/cencode.h;include/rcnb/cdecode.h;include/rcnb/encode.h;include/rcnb/decode.h")
-
+if (NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    target_include_directories(rcnb-static
+            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:include>)
+endif()
 add_executable(example1 examples/c-example1.c)
 target_link_libraries(example1 rcnb-static)
 add_executable(example2 examples/c-example2.c)
@@ -71,5 +77,5 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-config-version.cmake.
 install(TARGETS rcnb EXPORT ${PROJECT_NAME}-config
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/rcnb)
 install(EXPORT ${PROJECT_NAME}-config DESTINATION share/${PROJECT_NAME}/cmake)
