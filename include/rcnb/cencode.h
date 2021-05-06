@@ -22,4 +22,6 @@ size_t rcnb_encode_block(const char* plaintext_in, size_t length_in, wchar_t* co
 size_t rcnb_encode_blockend(wchar_t* code_out, rcnb_encodestate* state_in);
 size_t rcnb_encode(const char* plaintext_in, size_t length_in, wchar_t* code_out);
 
+void rcnb_encode_32n_x86(const char *value_in, char *value_out, size_t n);
+
 #endif /* RCNB_CENCODE_H */
