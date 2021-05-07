@@ -12,17 +12,49 @@ set(PROJECT_VERSION_MAJOR "1")
 set(PROJECT_VERSION_MINOR "0")
 set(PROJECT_VERSION_PATCH "0")
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-if(WIN32)
+if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_C_FLAGS "/utf-8 ${CMAKE_C_FLAGS}")
 endif()
+
+option(ENABLE_AVX2 "Enable AVX2 optimized code." OFF)
+option(ENABLE_SSSE3 "Enable SSSE3 optimized code." OFF)
+option(NATIVE_ASM "Allow compiler use best instruction set on current environment." OFF)
 
 ###
 ### Sources, headers, directories and libs
 ###
 include_directories(include)
 
-add_library(rcnb SHARED src/cencode.c src/cdecode.c src/rcnb.c)
-add_library(rcnb-static STATIC src/cencode.c src/cdecode.c src/rcnb.c)
+set(RCNB_SOURCES
+    src/cencode.c
+    src/cdecode.c
+    src/rcnb.c
+)
+
+if(ENABLE_AVX2)
+    if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
+        add_compile_options(/arch:AVX2)
+    else()
+        add_compile_options(-mavx2)
+    endif()
+    add_compile_definitions(ENABLE_AVX2)
+    set(RCNB_SOURCES ${RCNB_SOURCES} src/cencode_x86.c)
+elseif(ENABLE_SSSE3)
+    if(NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+        add_compile_options(-mssse3)
+    endif()
+    add_compile_definitions(ENABLE_SSSE3)
+    set(RCNB_SOURCES ${RCNB_SOURCES} src/cencode_x86.c)
+endif()
+
+if(NATIVE_ASM)
+    if(NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+        add_compile_options(-march=native)
+    endif()
+endif()
+
+add_library(rcnb SHARED ${RCNB_SOURCES})
+add_library(rcnb-static STATIC ${RCNB_SOURCES})
 set_target_properties(rcnb PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
