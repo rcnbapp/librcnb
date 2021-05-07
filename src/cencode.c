@@ -57,10 +57,10 @@ size_t rcnb_encode_block(const char* plaintext_in, size_t length_in,
         length_in--;
         state_in->cached = false;
     }
-#if defined(ENABLE_AVX2) || defined(ENABLE_SSSE3)
+#if defined(ENABLE_AVX2) || defined(ENABLE_SSSE3) || defined(ENABLE_NEON)
     size_t batch = length_in >> 5;
     if (batch > 0) {
-        rcnb_encode_32n_x86(plaintext_in, (char *) code_char, batch);
+        rcnb_encode_32n_asm(plaintext_in, (char *) code_char, batch);
     }
     plaintext_in += 32 * batch;
     code_char += 64 * batch;

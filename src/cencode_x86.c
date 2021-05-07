@@ -48,7 +48,7 @@ static const unsigned char shuffler[16] = {0, 1, 4, 5, 2, 3, 6, 7, 8, 9, 12, 13,
 
 #ifdef ENABLE_SSSE3
 
-void rcnb_encode_32n_x86(const char *value_in, char *value_out, size_t n) {
+void rcnb_encode_32n_asm(const char *value_in, char *value_out, size_t n) {
     for (size_t i = 0; i < n; ++i) {
         __m128i input1 = _mm_loadu_si128((__m128i *) value_in);
         input1 = _mm_shuffle_epi8(input1, *(__m128i *) &swizzle);
@@ -212,7 +212,7 @@ void rcnb_encode_32n_x86(const char *value_in, char *value_out, size_t n) {
 
 #ifdef ENABLE_AVX2
 
-void rcnb_encode_32n_x86(const char *value_in, char *value_out, size_t n) {
+void rcnb_encode_32n_asm(const char *value_in, char *value_out, size_t n) {
     __m256i r_swizzle = _mm256_broadcastsi128_si256(*(__m128i *) &swizzle);
     __m256i r_permute = *(__m256i *) &permuted;
     __m256i r_shuffler = _mm256_broadcastsi128_si256(*(__m128i *) &shuffler);

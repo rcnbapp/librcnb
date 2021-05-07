@@ -18,6 +18,7 @@ endif()
 
 option(ENABLE_AVX2 "Enable AVX2 optimized code." OFF)
 option(ENABLE_SSSE3 "Enable SSSE3 optimized code." OFF)
+option(ENABLE_NEON "Enable NEON optimized code." OFF)
 option(NATIVE_ASM "Allow compiler use best instruction set on current environment." OFF)
 
 ###
@@ -45,6 +46,11 @@ elseif(ENABLE_SSSE3)
     endif()
     add_compile_definitions(ENABLE_SSSE3)
     set(RCNB_SOURCES ${RCNB_SOURCES} src/cencode_x86.c)
+endif()
+
+if(ENABLE_NEON)
+    add_compile_definitions(ENABLE_NEON)
+    set(RCNB_SOURCES ${RCNB_SOURCES} src/cencode_arm64.c)
 endif()
 
 if(NATIVE_ASM)
