@@ -22,4 +22,6 @@ ptrdiff_t rcnb_decode_block(const wchar_t* code_in, size_t length_in, char* plai
 ptrdiff_t rcnb_decode_blockend(char* plaintext_out, rcnb_decodestate* state_in);
 ptrdiff_t rcnb_decode(const wchar_t* code_in, size_t length_in, char* plaintext_out);
 
+int rcnb_decode_32n_asm(const char *value_in, char *value_out, size_t n);
+
 #endif //RCNB_CDECODE_H
