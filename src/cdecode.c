@@ -82,6 +82,17 @@ ptrdiff_t rcnb_decode_block(const wchar_t* code_in, size_t length_in,
     if (!res)
         return -1;
     state_in->i = 0;
+#if defined(ENABLE_AVX2) || defined(ENABLE_SSSE3) || defined(ENABLE_NEON)
+    size_t batch = length_in >> 6;
+    if (batch > 0) {
+        res = rcnb_decode_32n_asm((const char *)code_in, plaintext_char, batch);
+        if (!res)
+            return -1;
+    }
+    plaintext_char += 32 * batch;
+    code_in += 64 * batch;
+    length_in = length_in & 63;
+#endif
     for (int i = 0; i < (length_in >> 2); ++i) {
         res = rcnb_decode_short(code_in + i * 4, &plaintext_char);
         if (!res)
